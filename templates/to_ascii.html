@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>to ASCII</title>
+    <style>
+        
+        input::-webkit-outer-spin-button,
+        input::-webkit-inner-spin-button {
+            /* display: none; <- Crashes Chrome on hover */
+            -webkit-appearance: none;
+            margin: 0; /* <-- Apparently some margin are still there even though it's hidden */
+        }
+        .input_params {
+            width: 150px;
+        }
+        body {
+            background-color: black;
+            font-size: 18px;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        <input class="input_params" type="number" required name="font_size"  placeholder="Size ASCII symbols" min="8" max="64" onkeydown="if (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 187 || event.keyCode == 190 || event.keyCode ==  188 || event.keyCode ==  109 || event.keyCode ==  107 ) return false" >
+        <br>
+        <br>        
+        <input class="input_params" type="number" required name="color_level" placeholder="Color level" min="2" max="32" onkeydown="if (event.keyCode == 69 || event.keyCode == 189 || event.keyCode == 187 || event.keyCode == 190 || event.keyCode ==  188 || event.keyCode ==  109 || event.keyCode ==  107 ) return false" > 
+        <br>  
+        <br>     
+        <input type="file" name="file">
+        <br>
+        <br>
+        <button type="submit">Upload</button>
+    </form>
+</body>
+</html>
