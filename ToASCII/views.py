@@ -3,7 +3,11 @@ from .models import Image
 from .color_ascii_image import *
 from random import randint
 from django.http import FileResponse, HttpResponse
+from django.conf import settings
+from os import environ
 
+
+environ["SDL_VIDEODRIVER"] = "dummy"
 
 def index(request):
     if request.method == 'POST':
@@ -18,15 +22,15 @@ def index(request):
         font_size = int(request.POST.get('font_size'))
         color_level = int(request.POST.get('color_level'))
 
-        path_to_source = 'media/source/' + file.name
-        path_to_save = 'media/ascii_arts/'
+        path_to_source = settings.MEDIA_ROOT + '/source/' + file.name
+        path_to_save = settings.MEDIA_ROOT + '/ascii_arts/'
 
         document = Image.objects.create(image=file)
         document.save()
 
         app = ArtConverter(path_to_source, path_to_save, font_size, color_level)
         image_name = app.run()
-        file = 'media/ascii_arts/' + image_name
+        file = settings.MEDIA_ROOT + '/ascii_arts/' + image_name
         response = FileResponse(open(file, 'rb'))
         return response
 
